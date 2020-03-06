@@ -1,0 +1,30 @@
+{
+    "name": "nickdekruijk/oxxa",
+    "description": "Oxxa API Laravel Package",
+    "license": "MIT",
+    "keywords": ["oxxa", "laravel", "api", "domains", "hosting", "registrar"],
+    "authors": [{
+        "name": "Nick de Kruijk",
+        "email": "git@nickdekruijk.nl"
+    }],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0.0",
+        "laravel/framework": ">=7.0.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NickDeKruijk\\Oxxa\\ServiceProvider"
+            ],
+            "aliases": {
+                "Oxxa": "NickDeKruijk\\Oxxa\\Facade"
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "NickDeKruijk\\Oxxa\\": "src/"
+        }
+    }
+}
