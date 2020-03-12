@@ -1,4 +1,5 @@
 <?php
+
 namespace NickDeKruijk\Oxxa;
 
 use GuzzleHttp\Client;
@@ -7,7 +8,7 @@ class Oxxa
 {
     const API_ENDPOINT = "https://api.oxxa.com/command.php";
 
-    public function call(Array $arguments)
+    public static function call(array $arguments)
     {
         $client = new Client([
             'base_uri' => self::API_ENDPOINT,
@@ -27,15 +28,21 @@ class Oxxa
 
         $xml = simplexml_load_string($res->getBody());
         $json = json_encode($xml);
-        $array = json_decode($json,TRUE);
+        $array = json_decode($json, TRUE);
         return $array;
     }
 
-    public function domain_list($records = -1)
+    public static function domain_list($take = -1)
     {
-        return $this->call([
+        $order = self::call([
             'command' => 'domain_list',
-            'records' => $records,
-        ])['order']['details']['domain'];
+            'records' => $take,
+        ]);
+
+        if ($order['order']['status_code'] != 'XMLOK18') {
+            throw new \Exception($order['order']['status_description']);
+        };
+
+        return collect($order['order']['details']['domain']);
     }
 }
